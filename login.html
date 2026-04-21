@@ -14,6 +14,7 @@
   <link rel="manifest" href="manifest.json"/>
   <title>Acesso ao sistema</title>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -91,6 +92,13 @@
     .btn-login:hover { opacity: 0.9; }
     .btn-login:active { transform: scale(0.98); }
     .btn-login:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .divider { display: flex; align-items: center; gap: 10px; margin: 18px 0 14px; color: #C4BAE8; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #E4DDFF; }
+
+    .btn-google { width: 100%; padding: 11px 14px; background: #fff; border: 1.5px solid #E4DDFF; border-radius: 8px; font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 600; color: #1E1248; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: background 0.2s, border-color 0.2s, box-shadow 0.2s; }
+    .btn-google:hover { background: #F8F6FF; border-color: #6C4FD4; box-shadow: 0 0 0 3px rgba(108,79,212,0.08); }
+    .btn-google:active { transform: scale(0.98); }
 
     .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -180,6 +188,19 @@
       <span id="btn-text">Entrar no sistema</span>
     </button>
 
+    <div class="divider">ou</div>
+
+    <button class="btn-google" onclick="entrarComGoogle()" type="button">
+      <svg width="18" height="18" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.35-8.16 2.35-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        <path fill="none" d="M0 0h48v48H0z"/>
+      </svg>
+      Entrar com o Google
+    </button>
+
     <div class="footer-note">
       SIGEA+
       <span class="version">Sistema Integrado de Gestão Escolar Avançada v3.0</span>
@@ -190,6 +211,49 @@
 <script>
   const SUPABASE_URL = 'https://biocjxggjjfeqmpuysik.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpb2NqeGdnampmZXFtcHV5c2lrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxODUwOTQsImV4cCI6MjA4OTc2MTA5NH0.3bL3dKqiWGoHROE6vSzf-7Orp0GLcLpn4mHtUSwC0dU';
+
+  const GOOGLE_CLIENT_ID = '809381065699-dm4ie2ob9kioi4nh1ureufkorcc77kck.apps.googleusercontent.com';
+
+  function entrarComGoogle() {
+    const client = google.accounts.oauth2.initTokenClient({
+      client_id: GOOGLE_CLIENT_ID,
+      scope: 'openid email profile',
+      callback: async (response) => {
+        if (response.error) { mostrarErro('Erro ao autenticar com o Google. Tente novamente.'); return; }
+        await loginComTokenGoogle(response.access_token);
+      },
+    });
+    client.requestAccessToken();
+  }
+
+  async function loginComTokenGoogle(accessToken) {
+    try {
+      const profileRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { Authorization: `Bearer ${accessToken}` } });
+      const profile = await profileRes.json();
+      const email = profile.email;
+      if (!email) { mostrarErro('Não foi possível obter o e-mail do Google.'); return; }
+      const url = `${SUPABASE_URL}/rest/v1/users?email=ilike.${encodeURIComponent(email)}&select=id,login,role,nome,escola_id,escolas_ids,tipo_secretaria,aluno_id,turma_id`;
+      const res = await fetch(url, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } });
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        const user = data[0];
+        sessionStorage.setItem('ded_user', JSON.stringify(user));
+        redirecionarPorRole(user.role);
+      } else {
+        mostrarErro('Nenhuma conta encontrada para este e-mail do Google.');
+      }
+    } catch (err) {
+      mostrarErro('Erro de conexão com o Google. Tente novamente.');
+    }
+  }
+
+  function redirecionarPorRole(role) {
+    if (role === 'admin') window.location.href = 'https://siproplus.vercel.app/admin_dashboard.html';
+    else if (role === 'secretaria') window.location.href = 'https://siproplus.vercel.app/secretaria_dashboard.html';
+    else if (role === 'representante') window.location.href = 'https://sirecplus.vercel.app';
+    else if (role === 'aluno') window.location.href = 'https://sialuno.vercel.app';
+    else window.location.href = 'https://sidedplus.vercel.app';
+  }
 
 
   function toggleSenha() {
