@@ -1,0 +1,45 @@
+{
+  "name": "SIGEA+ — Sistema Integrado de Gestão Escolar Avançada",
+  "short_name": "SIGEA+",
+  "description": "Sistema Integrado de Gestão Escolar Avançada",
+  "start_url": "./login.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#4A2C6E",
+  "theme_color": "#4A2C6E",
+  "lang": "pt-BR",
+  "categories": ["education", "productivity"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Acessar como Professor",
+      "short_name": "Professor",
+      "url": "https://sidedplus.vercel.app",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Acessar como Aluno",
+      "short_name": "Aluno",
+      "url": "https://sialuno.vercel.app",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Acessar como Secretaria",
+      "short_name": "Secretaria",
+      "url": "https://siproplus.vercel.app/secretaria_dashboard.html",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Acessar como Representante",
+      "short_name": "Representante",
+      "url": "https://sirecplus.vercel.app",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}
