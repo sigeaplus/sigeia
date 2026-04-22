@@ -557,7 +557,7 @@
     <img src="sigea_logo.png" alt="SIGEA+" style="width:36px;height:36px;object-fit:contain;border-radius:8px;">
     SIGEA<span class="plus">+</span>
   </a>
-  <a class="nav-access" href="login.html">
+  <a class="nav-access" href="#" onclick="abrirPortal(event)">
     Acessar SIGEA+
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
@@ -569,7 +569,7 @@
 <!-- MOBILE DRAWER -->
 <div class="nav-drawer" id="navDrawer">
   <div class="nav-drawer-label">Sistema Escolar Inteligente</div>
-  <a class="nav-drawer-cta" href="login.html" onclick="closeDrawer()">
+  <a class="nav-drawer-cta" href="#" onclick="closeDrawer();abrirPortal(event)">
     Acessar SIGEA+
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
@@ -591,7 +591,7 @@
       <p class="hero-body">
         O SIDED+ organiza o dia a dia da escola — chamadas, notas, planejamentos e relatórios — tudo em um só lugar, rápido e sem complicação.
       </p>
-      <a class="hero-cta" href="login.html">
+      <a class="hero-cta" href="#" onclick="abrirPortal(event)">
         Entrar no sistema
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
@@ -738,7 +738,7 @@
       <h2 class="callout-title">Pronto para largar<br>o papel de vez?</h2>
       <p class="callout-sub">Acesse o SIDED+ agora e comece a usar.</p>
     </div>
-    <a class="callout-btn" href="login.html">
+    <a class="callout-btn" href="#" onclick="abrirPortal(event)">
       Acessar Agora
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
@@ -749,7 +749,7 @@
 <footer>
   <a class="footer-logo" href="#">
     <img src="sigea_logo.png" alt="SIGEA+" onerror="this.style.display='none'">
-    SIDED+
+    SIGEA+
   </a>
   <span class="footer-copy">Sistema de Gestão Escolar · Todos os direitos reservados</span>
 </footer>
@@ -779,6 +779,63 @@
   });
   // Fecha ao rolar
   window.addEventListener('scroll', closeDrawer, { passive: true });
+</script>
+
+<!-- MODAL PORTAL -->
+<div id="portalOverlay" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(10,8,30,0.92);backdrop-filter:blur(18px);align-items:center;justify-content:center;padding:20px;">
+  <div style="width:100%;max-width:520px;background:#13112a;border:1px solid rgba(124,58,237,0.25);border-radius:24px;padding:44px 36px;position:relative;animation:portalIn 0.3s ease;">
+    <button onclick="fecharPortal()" style="position:absolute;top:16px;right:18px;background:none;border:none;color:rgba(255,255,255,0.35);font-size:22px;cursor:pointer;line-height:1;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">✕</button>
+
+    <div style="text-align:center;margin-bottom:32px;">
+      <img src="sigea_logo.png" alt="SIGEA+" style="width:52px;height:52px;border-radius:12px;object-fit:cover;margin-bottom:14px;"/>
+      <div style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:6px;">Qual é o seu portal?</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.45);">Selecione o perfil de acesso correspondente</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <a href="https://sidedplus.vercel.app" style="text-decoration:none;">
+        <div class="portal-card" style="background:#0d0d1a;border:1.5px solid rgba(79,125,255,0.25);border-radius:14px;padding:22px 18px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='#4f7dff';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(79,125,255,0.25)';this.style.transform='translateY(0)'">
+          <img src="sided_logo.png" alt="SIDED+" style="width:44px;height:44px;border-radius:10px;object-fit:cover;margin-bottom:10px;"/>
+          <div style="font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;color:#4f7dff;margin-bottom:4px;">SIDED+</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.45);">Professor & Diretor</div>
+        </div>
+      </a>
+
+      <a href="https://sialuno.vercel.app" style="text-decoration:none;">
+        <div class="portal-card" style="background:#0a1628;border:1.5px solid rgba(245,158,11,0.25);border-radius:14px;padding:22px 18px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='#f59e0b';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(245,158,11,0.25)';this.style.transform='translateY(0)'">
+          <img src="sialuno_logo.png" alt="SIALUNO" style="width:44px;height:44px;border-radius:10px;object-fit:cover;margin-bottom:10px;"/>
+          <div style="font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;color:#f59e0b;margin-bottom:4px;">SIALUNO</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.45);">Aluno</div>
+        </div>
+      </a>
+
+      <a href="https://sirecplus.vercel.app" style="text-decoration:none;">
+        <div class="portal-card" style="background:#0d1a0d;border:1.5px solid rgba(34,197,94,0.25);border-radius:14px;padding:22px 18px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='#22c55e';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(34,197,94,0.25)';this.style.transform='translateY(0)'">
+          <img src="sirec_logo.png" alt="SIREC" style="width:44px;height:44px;border-radius:10px;object-fit:cover;margin-bottom:10px;"/>
+          <div style="font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;color:#22c55e;margin-bottom:4px;">SIREC</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.45);">Representante</div>
+        </div>
+      </a>
+
+      <a href="https://siproplus.vercel.app" style="text-decoration:none;">
+        <div class="portal-card" style="background:#00101f;border:1.5px solid rgba(56,189,248,0.25);border-radius:14px;padding:22px 18px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='#38bdf8';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(56,189,248,0.25)';this.style.transform='translateY(0)'">
+          <img src="sipro_logo.png" alt="SIPRO+" style="width:44px;height:44px;border-radius:10px;object-fit:cover;margin-bottom:10px;"/>
+          <div style="font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;color:#38bdf8;margin-bottom:4px;">SIPRO+</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.45);">Secretaria & Admin</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes portalIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+</style>
+
+<script>
+  function abrirPortal(e){e.preventDefault();const o=document.getElementById('portalOverlay');o.style.display='flex';}
+  function fecharPortal(){document.getElementById('portalOverlay').style.display='none';}
+  document.getElementById('portalOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('portalOverlay'))fecharPortal();});
 </script>
 </body>
 </html>
