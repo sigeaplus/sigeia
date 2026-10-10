@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<link rel="icon" href="sigea_logo.png">
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "SIGEIA+",
-  "url": "https://sigeiaplus.vercel.app"
-}
-</script>
-</head>
 <meta charset="UTF-8">
+<link rel="icon" href="sigea_logo.png">
+<meta name="theme-color" content="#f4f2ff">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SIGEIA — Sistema de Gestão Educacional de Integração Administrativa</title>
   <meta name="description" content="SIGEIA é o Sistema de Gestão Educacional de Integração Administrativa de gestão escolar digital para professores, alunos, secretaria e representantes. Acesse notas, chamadas e planejamentos."/>
   <meta name="keywords" content="sistema escolar, diário digital, gestão escolar, SIGEIA, notas, frequência, secretaria escolar"/>
   <meta name="robots" content="index, follow"/>
   <link rel="canonical" href="https://sigeaplus.vercel.app/"/>
-  <meta property="og:title" content="SIGEIA — Sistema de Gestão Educacional de Integração Administrativa de Gestão Escolar Avançada"/>
+  <meta property="og:title" content="SIGEIA — Sistema de Gestão Educacional de Integração Administrativa"/>
   <meta property="og:description" content="Gerencie sua escola de forma digital e inteligente com o SIGEIA."/>
   <meta property="og:image" content="https://sigeaplus.vercel.app/sigea_logo.png"/>
   <meta property="og:url" content="https://sigeaplus.vercel.app/"/>
   <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="SIGEIA"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "SIGEIA",
+    "alternateName": "SIGEIA+",
+    "url": "https://sigeaplus.vercel.app/"
+  }
+  </script>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -36,10 +38,28 @@
     --card:    #ffffff;
     --muted:   #7c7a8e;
     --line:    #e4e0f4;
+    --nav-h:   68px;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--nav-h);
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+  }
+
+  /* Remove o destaque azul ao tocar (mobile) e o contorno de foco ao clicar */
+  a, button, [onclick], label {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    touch-action: manipulation;
+  }
+  :focus { outline: none; }
+  /* Mantém acessibilidade: contorno só para quem navega por teclado */
+  :focus-visible { outline: 2px solid var(--purple); outline-offset: 3px; }
+  a:active, button:active { outline: none; }
+  a:active, .nav-access:active, .hero-cta:active, .callout-btn:active, .nav-drawer-cta:active { transform: scale(0.97); }
 
   body {
     font-family: 'DM Sans', sans-serif;
@@ -52,8 +72,10 @@
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 48px;
+    height: var(--nav-h);
+    padding: 0 48px;
     background: rgba(244,242,255,0.85);
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--line);
   }
@@ -86,12 +108,13 @@
     box-shadow: 0 4px 20px rgba(124,58,237,0.35);
     transition: transform 0.2s, box-shadow 0.2s;
   }
-  .nav-access:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(124,58,237,0.45); }
+  @media (hover:hover) { .nav-access:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(124,58,237,0.45); } }
   .nav-access svg { width: 14px; height: 14px; }
 
   /* ─── HERO ─── */
   .hero-wrap {
     min-height: 100vh;
+    min-height: 100svh;
     position: relative;
     overflow: hidden;
     display: flex; align-items: center;
@@ -180,7 +203,7 @@
     box-shadow: 0 8px 32px rgba(124,58,237,0.4);
     transition: transform 0.2s, box-shadow 0.2s;
   }
-  .hero-cta:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(124,58,237,0.5); }
+  @media (hover:hover) { .hero-cta:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(124,58,237,0.5); } }
 
   .hero-visual { display: flex; justify-content: flex-end; position: relative; }
   .card-stack { position: relative; width: 340px; height: 420px; }
@@ -208,7 +231,7 @@
     color: var(--muted); margin-bottom: 14px;
   }
   .hcard-row {
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
     padding: 6px 0; border-bottom: 1px dashed var(--line); color: var(--ink);
   }
   .hcard-row:last-child { border-bottom: none; }
@@ -217,7 +240,7 @@
   .dot-purple { background: var(--purple); }
   .dot-orange { background: var(--orange); }
 
-  .badge { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.66rem; padding: 2px 8px; border-radius: 20px; }
+  .badge { white-space: nowrap; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.66rem; padding: 2px 8px; border-radius: 20px; }
   .bg-green  { background: #f0fdf4; color: #16a34a; }
   .bg-red    { background: #fef2f2; color: #dc2626; }
   .bg-orange { background: #fff7ed; color: #ea580c; }
@@ -244,7 +267,7 @@
     padding: 32px 28px; border: 1px solid var(--line);
     text-align: center; transition: transform 0.2s;
   }
-  .stat-card:hover { transform: translateY(-4px); }
+  @media (hover:hover) { .stat-card:hover { transform: translateY(-4px); } }
   .stat-num {
     font-family: 'Nunito', sans-serif; font-weight: 900;
     font-size: 2.8rem; letter-spacing: -0.04em; line-height: 1; margin-bottom: 8px;
@@ -270,7 +293,7 @@
     border: 1px solid var(--line); position: relative; overflow: hidden;
     transition: transform 0.22s, box-shadow 0.22s;
   }
-  .role-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(26,16,64,0.12); }
+  @media (hover:hover) { .role-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(26,16,64,0.12); } }
   .role-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; border-radius: 18px 18px 0 0; }
   .rc-purple::before  { background: linear-gradient(90deg, var(--purple), var(--magenta)); }
   .rc-cyan::before    { background: linear-gradient(90deg, var(--cyan), var(--green)); }
@@ -320,7 +343,7 @@
     border-radius: 18px; padding: 36px 32px; position: relative; overflow: hidden;
     transition: background 0.22s, transform 0.22s;
   }
-  .feat:hover { background: rgba(255,255,255,0.08); transform: translateY(-4px); }
+  @media (hover:hover) { .feat:hover { background: rgba(255,255,255,0.08); transform: translateY(-4px); } }
   .feat-glow { position: absolute; width: 120px; height: 120px; border-radius: 50%; opacity: 0.15; top: -30px; right: -30px; pointer-events: none; }
   .fg-purple  { background: var(--purple); }
   .fg-cyan    { background: var(--cyan); }
@@ -360,7 +383,7 @@
     transition: transform 0.2s, box-shadow 0.2s;
     white-space: nowrap;
   }
-  .callout-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0,0,0,0.2); }
+  @media (hover:hover) { .callout-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0,0,0,0.2); } }
 
   /* ─── FOOTER ─── */
   footer { border-top: 1px solid var(--line); padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; }
@@ -380,7 +403,7 @@
     background: none; border: none; padding: 8px;
     border-radius: 10px; transition: background .2s;
   }
-  .nav-hamburger:hover { background: rgba(124,58,237,0.08); }
+  @media (hover:hover) { .nav-hamburger:hover { background: rgba(124,58,237,0.08); } }
   .nav-hamburger span {
     display: block; height: 2px; border-radius: 2px;
     background: var(--ink); transition: all .3s cubic-bezier(.4,0,.2,1);
@@ -393,7 +416,7 @@
   /* Mobile nav drawer */
   .nav-drawer {
     display: none;
-    position: fixed; top: 61px; left: 0; right: 0; z-index: 99;
+    position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 99;
     background: rgba(244,242,255,0.97);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--line);
@@ -417,148 +440,220 @@
     color: var(--muted); text-align: center;
   }
 
-  /* ─── RESPONSIVE: TABLET ─── */
-  @media(max-width:900px) {
-    nav { padding: 14px 20px; }
-    .hero { grid-template-columns:1fr; padding: 100px 24px 60px; gap: 40px; }
-    .hero-visual { justify-content: center; }
-    .card-stack { width: 290px; height: 360px; }
-    .hcard-1 { width: 260px; } .hcard-2 { width: 250px; } .hcard-3 { width: 240px; }
-    .section { padding: 70px 24px; }
-    .roles-header { flex-direction: column; align-items: flex-start; gap: 14px; }
-    .roles-note { text-align: left; max-width: 100%; }
-    .roles-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-    .feat-grid { grid-template-columns: 1fr 1fr; }
-    .stats-grid { grid-template-columns: 1fr 1fr; }
-    .features-inner { padding: 0 24px; }
-    .callout-section { padding: 70px 24px; }
-    .callout-box { flex-direction: column; padding: 48px 32px; border-radius: 20px; }
-    .stats-wrap { padding: 60px 24px 0; }
-    footer { flex-direction: column; gap: 10px; text-align: center; padding: 20px 24px; }
+  /* ─── PORTAL MODAL ─── */
+  @keyframes portalIn { from{opacity:0;transform:scale(0.95)} to{opacity:1;transform:scale(1)} }
+  .portal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 300;
+    background: rgba(10,8,30,0.92);
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    align-items: center; justify-content: center;
+    padding: 20px; overflow-y: auto; overscroll-behavior: contain;
+  }
+  .portal-modal {
+    width: 100%; max-width: 520px; margin: auto;
+    background: #13112a; border: 1px solid rgba(124,58,237,0.25);
+    border-radius: 24px; padding: 44px 36px; position: relative;
+    animation: portalIn 0.3s ease;
+  }
+  .portal-close {
+    position: absolute; top: 10px; right: 10px; width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    background: none; border: none; border-radius: 50%;
+    color: rgba(255,255,255,0.45); font-size: 22px; line-height: 1; cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+  }
+  .portal-head { text-align: center; margin-bottom: 32px; }
+  .portal-head img { width: 52px; height: 52px; border-radius: 12px; object-fit: cover; margin-bottom: 14px; }
+  .portal-title { font-family: 'Nunito', sans-serif; font-size: 22px; font-weight: 900; color: #fff; margin-bottom: 6px; }
+  .portal-sub { font-size: 13px; color: rgba(255,255,255,0.45); }
+  .portal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .portal-link { display: block; text-decoration: none; }
+  .portal-card {
+    height: 100%; background: var(--bg); border: 1.5px solid var(--bd);
+    border-radius: 14px; padding: 22px 18px; text-align: center; cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .portal-card img { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; margin-bottom: 10px; }
+  .portal-name { font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 800; color: var(--ac); margin-bottom: 4px; }
+  .portal-role { font-size: 11px; color: rgba(255,255,255,0.45); }
+  .portal-card:active { border-color: var(--ac); transform: scale(0.98); }
+  @media (hover:hover) {
+    .portal-card:hover { border-color: var(--ac); transform: translateY(-3px); }
+    .portal-close:hover { color: #fff; background: rgba(255,255,255,0.08); }
   }
 
-  /* ─── RESPONSIVE: MOBILE ─── */
-  @media(max-width:560px) {
+  /* ─── RESPONSIVE: NOTEBOOK PEQUENO / TABLET NA HORIZONTAL ─── */
+  @media(max-width:1100px) {
+    nav { padding: 0 32px; }
+    .hero { padding: 120px 32px 70px; gap: 40px; }
+    .section { padding: 80px 32px; }
+    .stats-wrap { padding: 64px 32px 0; }
+    .features-inner { padding: 0 32px; }
+    .callout-section { padding: 80px 32px; }
+    .callout-box { padding: 56px 48px; }
+    footer { padding: 28px 32px; }
+  }
+
+  /* ─── RESPONSIVE: TABLET ─── */
+  @media(max-width:900px) {
+    :root { --nav-h: 64px; }
+    nav { padding: 0 24px; }
+    .blob-1 { width: 420px; height: 420px; }
+    .blob-2 { width: 360px; height: 360px; }
+
+    /* Hero centralizado, com os 3 cartões lado a lado */
+    .hero-wrap { min-height: auto; }
+    .hero {
+      grid-template-columns: 1fr; gap: 48px; text-align: center;
+      padding: calc(var(--nav-h) + 48px) 24px 56px;
+    }
+    .hero > div:first-child { display: flex; flex-direction: column; align-items: center; }
+    .hero-body { max-width: 520px; }
+    .hero-visual { justify-content: center; }
+    .card-stack {
+      width: 100%; max-width: 720px; height: auto; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: start;
+    }
+    .card-stack .hcard {
+      position: static; width: auto; transform: none; animation: none;
+      padding: 18px 16px; text-align: left;
+    }
+    .hcard-row { font-size: 0.8rem; }
+
+    .stats-wrap { padding: 56px 24px 0; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .section { padding: 72px 24px; }
+    .roles-header { flex-direction: column; align-items: flex-start; gap: 14px; margin-bottom: 36px; }
+    .roles-note { text-align: left; max-width: 100%; }
+    .roles-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+    .role-card { padding: 28px 24px; }
+    .role-card.coming .role-name, .role-card.beta .role-name { padding-right: 0; }
+
+    .features-wrap { padding: 72px 0; }
+    .features-inner { padding: 0 24px; }
+    .feat-grid { grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 40px; }
+    .feat { padding: 28px 24px; }
+
+    .callout-section { padding: 56px 24px 72px; }
+    .callout-box {
+      flex-direction: column; align-items: center; text-align: center;
+      padding: 52px 32px; border-radius: 24px; gap: 28px;
+    }
+    .callout-box::before { font-size: 12rem; right: -10px; top: -20px; }
+
+    footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px; }
+  }
+
+  /* ─── RESPONSIVE: CELULAR ─── */
+  @media(max-width:640px) {
+    :root { --nav-h: 56px; }
+
     /* Nav */
-    nav { padding: 12px 16px; }
+    nav { padding: 0 16px; }
     .nav-access { display: none; }
     .nav-hamburger { display: flex; }
     .nav-logo { font-size: 1.25rem; }
-    .nav-logo img { width: 30px; height: 30px; }
+    .nav-logo img { width: 30px !important; height: 30px !important; }
 
-    /* Hero — layout vertical otimizado */
-    .hero {
-      grid-template-columns: 1fr;
-      padding: 80px 20px 52px;
-      gap: 0;
-      text-align: center;
-    }
-    .hero > div:first-child {
-      display: flex; flex-direction: column; align-items: center;
-    }
-    .hero-badge {
-      font-size: 0.67rem; padding: 5px 12px; margin-bottom: 18px;
-      align-self: center;
-    }
-    .hero-title {
-      font-size: clamp(2.4rem, 11vw, 3.2rem);
-      margin-bottom: 16px;
-      line-height: 1.0;
-    }
-    .hero-body {
-      font-size: 0.96rem; margin-bottom: 28px;
-      max-width: 100%; text-align: center;
-    }
-    .hero-cta {
-      padding: 15px 32px; font-size: 0.95rem;
-      width: 100%; justify-content: center;
-      border-radius: 16px;
-    }
+    .blob { filter: blur(60px); }
+    .blob-1 { width: 300px; height: 300px; top: -100px; left: -120px; }
+    .blob-2 { width: 260px; height: 260px; top: 320px; right: -120px; }
+    .blob-3 { display: none; }
 
-    /* Cards visuais — mostrar apenas 1 cartão centralizado no mobile */
-    .hero-visual {
-      justify-content: center;
-      margin-top: 44px;
-      height: 200px;
-      position: relative;
-    }
-    .card-stack { width: 100%; height: 200px; }
+    /* Hero */
+    .hero { padding: calc(var(--nav-h) + 32px) 20px 44px; gap: 36px; }
+    .hero-badge { font-size: 0.67rem; padding: 5px 12px; margin-bottom: 18px; }
+    .hero-title { font-size: clamp(2.4rem, 11vw, 3.2rem); margin-bottom: 16px; }
+    .hero-body { font-size: 0.96rem; margin-bottom: 28px; max-width: 100%; }
+    .hero-cta { width: 100%; justify-content: center; padding: 15px 28px; font-size: 0.95rem; border-radius: 16px; }
 
-    /* Esconde cards 1 e 3, deixa só o card 2 centralizado e sem rotação */
+    /* Só o cartão de notas, centralizado */
+    .card-stack { grid-template-columns: 1fr; max-width: 340px; }
     .hcard-1, .hcard-3 { display: none; }
-    .hcard-2 {
-      position: relative; top: auto; left: auto;
-      width: 100%; max-width: 320px;
-      margin: 0 auto;
-      transform: none !important;
-      animation: none !important;
-      border-top-color: var(--purple);
-      box-shadow: 0 8px 32px rgba(124,58,237,0.18);
-    }
+    .card-stack .hcard-2 { border-top-color: var(--purple); box-shadow: 0 8px 32px rgba(124,58,237,0.18); }
 
-    /* Strip marquee */
     .strip-item { padding: 0 20px; font-size: 0.74rem; }
 
-    /* Stats — 2 colunas compactas */
-    .stats-wrap { padding: 48px 16px 0; }
-    .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-    .stat-card { padding: 24px 16px; border-radius: 16px; }
-    .stat-num { font-size: 2.4rem; }
+    /* Stats */
+    .stats-wrap { padding: 40px 16px 0; }
+    .stats-grid { gap: 10px; }
+    .stat-card { padding: 22px 14px; border-radius: 16px; }
+    .stat-num { font-size: 2.2rem; }
     .stat-label { font-size: 0.78rem; line-height: 1.4; }
 
-    /* Roles */
-    .section { padding: 56px 16px; }
+    /* Perfis: ícone à esquerda, nome + descrição empilhados à direita */
+    .section { padding: 52px 16px; }
+    .s-title { font-size: 1.75rem; }
     .roles-header { margin-bottom: 24px; padding-bottom: 16px; gap: 10px; }
-    .s-title { font-size: 1.75rem; letter-spacing: -0.03em; }
     .roles-note { font-size: 0.8rem; }
     .roles-grid { grid-template-columns: 1fr; gap: 10px; }
     .role-card {
-      padding: 22px 20px; border-radius: 16px;
-      display: flex; flex-direction: row; align-items: flex-start; gap: 14px;
+      display: grid; grid-template-columns: auto 1fr; column-gap: 14px; align-items: start;
+      padding: 20px 18px 20px 22px; border-radius: 16px;
     }
-    .role-card::before { height: 100%; width: 4px; right: auto; top: 0; border-radius: 16px 0 0 16px; }
-    .role-icon { font-size: 1.7rem; margin-bottom: 0; flex-shrink: 0; margin-top: 2px; }
-    .role-name { font-size: 1rem; margin-bottom: 4px; }
-    .role-desc { font-size: 0.82rem; line-height: 1.55; }
+    .role-card::before { top: 0; left: 0; right: auto; width: 4px; height: 100%; border-radius: 16px 0 0 16px; }
+    .role-icon { grid-row: 1 / span 2; font-size: 1.7rem; margin: 2px 0 0; }
+    .role-name { grid-column: 2; font-size: 1rem; margin-bottom: 4px; }
+    .role-desc { grid-column: 2; font-size: 0.84rem; line-height: 1.55; }
+    .role-card.coming .role-name, .role-card.beta .role-name { padding-right: 76px; }
+    .role-card.coming::after, .role-card.beta::after { top: 12px; right: 12px; }
 
-    /* Features dark */
-    .features-wrap { padding: 60px 0; }
+    /* Funcionalidades: mesmo padrão */
+    .features-wrap { padding: 56px 0; }
     .features-inner { padding: 0 16px; }
-    .feat-grid { grid-template-columns: 1fr; gap: 10px; margin-top: 32px; }
+    .feat-grid { grid-template-columns: 1fr; gap: 10px; margin-top: 28px; }
     .feat {
-      padding: 22px 20px; border-radius: 16px;
-      display: flex; flex-direction: row; align-items: flex-start; gap: 14px;
+      display: grid; grid-template-columns: auto 1fr; column-gap: 14px; align-items: start;
+      padding: 20px 18px; border-radius: 16px;
     }
     .feat-glow { width: 80px; height: 80px; top: -20px; right: -20px; }
-    .feat-icon { font-size: 1.6rem; margin-bottom: 0; flex-shrink: 0; margin-top: 2px; }
-    .feat-title { font-size: 0.98rem; margin-bottom: 6px; }
-    .feat-desc { font-size: 0.82rem; line-height: 1.6; }
+    .feat-icon { grid-row: 1 / span 2; font-size: 1.6rem; margin: 2px 0 0; }
+    .feat-title { grid-column: 2; font-size: 0.98rem; margin-bottom: 6px; }
+    .feat-desc { grid-column: 2; font-size: 0.84rem; line-height: 1.6; }
 
-    /* Callout */
-    .callout-section { padding: 40px 16px 56px; }
-    .callout-box {
-      padding: 36px 24px 40px; border-radius: 22px; gap: 24px;
-      text-align: center; flex-direction: column; align-items: center;
-    }
-    .callout-box::before { font-size: 9rem; top: -10px; right: -5px; }
-    .callout-title { font-size: 1.7rem; }
+    /* Chamada final */
+    .callout-section { padding: 32px 16px 52px; }
+    .callout-box { padding: 36px 22px 32px; border-radius: 22px; gap: 22px; }
+    .callout-box::before { font-size: 8rem; top: -10px; right: -5px; }
+    .callout-title { font-size: 1.65rem; }
     .callout-sub { font-size: 0.92rem; }
-    .callout-btn {
-      width: 100%; justify-content: center;
-      padding: 15px 28px; border-radius: 14px; font-size: 0.95rem;
-    }
+    .callout-btn { width: 100%; justify-content: center; padding: 15px 24px; border-radius: 14px; font-size: 0.95rem; }
 
-    /* Footer */
-    footer { padding: 20px 16px; gap: 8px; flex-direction: column; text-align: center; }
+    footer { padding: 20px 16px; gap: 8px; }
     .footer-copy { font-size: 0.72rem; }
+
+    /* Modal de portais */
+    .portal-overlay { padding: 14px; }
+    .portal-modal { padding: 40px 18px 22px; border-radius: 20px; }
+    .portal-head { margin-bottom: 22px; }
+    .portal-grid { gap: 10px; }
+    .portal-card { padding: 16px 8px; }
+    .portal-card img { width: 38px; height: 38px; }
   }
 
   /* Telas muito pequenas */
   @media(max-width:360px) {
     .hero-title { font-size: 2.1rem; }
-    .hcard-2 { max-width: 280px; }
-    .stats-grid { grid-template-columns: 1fr 1fr; }
-    .stat-num { font-size: 2rem; }
+    .stats-grid { gap: 8px; }
+    .stat-card { padding: 18px 10px; }
+    .stat-num { font-size: 1.9rem; }
+    .role-card.coming .role-name, .role-card.beta .role-name { padding-right: 0; padding-top: 22px; }
+  }
+
+  /* Celular deitado (pouca altura) */
+  @media(max-height:480px) and (orientation:landscape) {
+    .hero { padding-top: calc(var(--nav-h) + 20px); padding-bottom: 32px; }
+    .nav-drawer { max-height: calc(100vh - var(--nav-h)); overflow-y: auto; }
+  }
+
+  @media(min-width:641px) { .nav-drawer { display: none !important; } }
+
+  /* Respeita quem prefere menos animação */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    .reveal { opacity: 1; transform: none; }
+    html { scroll-behavior: auto; }
   }
 </style>
 </head>
@@ -578,7 +673,7 @@
     Acessar SIGEIA
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
   </a>
-  <button class="nav-hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Menu">
+  <button class="nav-hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -783,9 +878,11 @@
     const drawer = document.getElementById('navDrawer');
     btn.classList.toggle('open');
     drawer.classList.toggle('open');
+    btn.setAttribute('aria-expanded', btn.classList.contains('open'));
   }
   function closeDrawer() {
     document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('hamburger').setAttribute('aria-expanded', 'false');
     document.getElementById('navDrawer').classList.remove('open');
   }
   // Fecha ao clicar fora
@@ -799,60 +896,62 @@
 </script>
 
 <!-- MODAL PORTAL -->
-<div id="portalOverlay" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(10,8,30,0.92);backdrop-filter:blur(18px);align-items:center;justify-content:center;padding:20px;">
-  <div style="width:100%;max-width:520px;background:#13112a;border:1px solid rgba(124,58,237,0.25);border-radius:24px;padding:44px 36px;position:relative;animation:portalIn 0.3s ease;">
-    <button onclick="fecharPortal()" style="position:absolute;top:16px;right:18px;background:none;border:none;color:rgba(255,255,255,0.35);font-size:22px;cursor:pointer;line-height:1;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">✕</button>
+<div class="portal-overlay" id="portalOverlay" role="dialog" aria-modal="true" aria-labelledby="portalTitle">
+  <div class="portal-modal">
+    <button class="portal-close" onclick="fecharPortal()" aria-label="Fechar">✕</button>
 
-    <div style="text-align:center;margin-bottom:32px;">
-      <img src="sigea_logo.png" alt="SIDED+" style="width:52px;height:52px;border-radius:12px;object-fit:cover;margin-bottom:14px;"/>
-      <div style="font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:6px;">Qual é o seu portal?</div>
-      <div style="font-size:13px;color:rgba(255,255,255,0.45);">Selecione o perfil de acesso correspondente</div>
+    <div class="portal-head">
+      <img src="sigea_logo.png" alt="SIGEIA">
+      <div class="portal-title" id="portalTitle">Qual é o seu portal?</div>
+      <div class="portal-sub">Selecione o perfil de acesso correspondente</div>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-      <a href="https://sidedplus.vercel.app" style="text-decoration:none;">
-        <div class="portal-card" style="background:#0d0d1a;border:1.5px solid rgba(79,125,255,0.25);border-radius:14px;padding:22px 18px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='#4f7dff';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(79,125,255,0.25)';this.style.transform='translateY(0)'">
-          <img src="sided_logo.png" alt="SIDED+" style="width:44px;height:44px;border-radius:10px;object-fit:cover;margin-bottom:10px;"/>
-          <div style="font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;color:#4f7dff;margin-bottom:4px;">SIDED+</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.45);">Professor & Diretor</div>
+    <div class="portal-grid">
+      <a class="portal-link" href="https://sidedplus.vercel.app">
+        <div class="portal-card" style="--bg:#0d0d1a;--bd:rgba(79,125,255,0.25);--ac:#4f7dff;">
+          <img src="sided_logo.png" alt="SIDED+">
+          <div class="portal-name">SIDED+</div>
+          <div class="portal-role">Professor &amp; Diretor</div>
         </div>
       </a>
-
-      <a href="https://sialuno.vercel.app" style="text-decoration:none;">
-        <div class="portal-card" style="background:#0a1628;border:1.5px solid rgba(245,158,11,0.25);border-radius:14px;padding:22px 18px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='#f59e0b';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(245,158,11,0.25)';this.style.transform='translateY(0)'">
-          <img src="sialuno_logo.png" alt="SIALUNO" style="width:44px;height:44px;border-radius:10px;object-fit:cover;margin-bottom:10px;"/>
-          <div style="font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;color:#f59e0b;margin-bottom:4px;">SIALUNO</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.45);">Aluno</div>
+      <a class="portal-link" href="https://sialuno.vercel.app">
+        <div class="portal-card" style="--bg:#0a1628;--bd:rgba(245,158,11,0.25);--ac:#f59e0b;">
+          <img src="sialuno_logo.png" alt="SIALUNO">
+          <div class="portal-name">SIALUNO</div>
+          <div class="portal-role">Aluno</div>
         </div>
       </a>
-
-      <a href="https://sirecplus.vercel.app" style="text-decoration:none;">
-        <div class="portal-card" style="background:#0d1a0d;border:1.5px solid rgba(34,197,94,0.25);border-radius:14px;padding:22px 18px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='#22c55e';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(34,197,94,0.25)';this.style.transform='translateY(0)'">
-          <img src="sirec_logo.png" alt="SIREC" style="width:44px;height:44px;border-radius:10px;object-fit:cover;margin-bottom:10px;"/>
-          <div style="font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;color:#22c55e;margin-bottom:4px;">SIREC</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.45);">Representante</div>
+      <a class="portal-link" href="https://sirecplus.vercel.app">
+        <div class="portal-card" style="--bg:#0d1a0d;--bd:rgba(34,197,94,0.25);--ac:#22c55e;">
+          <img src="sirec_logo.png" alt="SIREC">
+          <div class="portal-name">SIREC</div>
+          <div class="portal-role">Representante</div>
         </div>
       </a>
-
-      <a href="https://siproplus.vercel.app" style="text-decoration:none;">
-        <div class="portal-card" style="background:#00101f;border:1.5px solid rgba(56,189,248,0.25);border-radius:14px;padding:22px 18px;text-align:center;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='#38bdf8';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(56,189,248,0.25)';this.style.transform='translateY(0)'">
-          <img src="sipro_logo.png" alt="SIPRO+" style="width:44px;height:44px;border-radius:10px;object-fit:cover;margin-bottom:10px;"/>
-          <div style="font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;color:#38bdf8;margin-bottom:4px;">SIPRO+</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.45);">Secretaria & Admin</div>
+      <a class="portal-link" href="https://siproplus.vercel.app">
+        <div class="portal-card" style="--bg:#00101f;--bd:rgba(56,189,248,0.25);--ac:#38bdf8;">
+          <img src="sipro_logo.png" alt="SIPRO+">
+          <div class="portal-name">SIPRO+</div>
+          <div class="portal-role">Secretaria &amp; Admin</div>
         </div>
       </a>
     </div>
   </div>
 </div>
 
-<style>
-@keyframes portalIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
-</style>
-
 <script>
-  function abrirPortal(e){e.preventDefault();const o=document.getElementById('portalOverlay');o.style.display='flex';}
-  function fecharPortal(){document.getElementById('portalOverlay').style.display='none';}
-  document.getElementById('portalOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('portalOverlay'))fecharPortal();});
+  const portal = document.getElementById('portalOverlay');
+  function abrirPortal(e) {
+    if (e) e.preventDefault();
+    portal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function fecharPortal() {
+    portal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  portal.addEventListener('click', e => { if (e.target === portal) fecharPortal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharPortal(); });
 </script>
 </body>
 </html>
